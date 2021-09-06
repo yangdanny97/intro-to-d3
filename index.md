@@ -3,13 +3,6 @@ layout: page
 title: Overview
 ---
 
-### Background
-
-In Square’s new engineer onboarding program, which we call NEO, we offer short
-courses and lectures on a variety of tools that we use at Square. We started to
-collect notes from our course on D3.js and found the notes were well-suited for
-a tutorial — and worth sharing.
-
 ### Introduction
 
 The tutorial provides a quick intro to [D3.js](http://d3js.org/), a Javascript
@@ -22,6 +15,8 @@ bits" (hat tip [@andy_matuschak][tweet]).
 
 Again, the tutorial is _not_ a deep dive — we want you to learn _how_ to learn
 D3 and gain a high-level understanding of this useful tool.
+
+This tutorial is a fork of Square's [Intro to D3](https://square.github.io/intro-to-d3/), updated for newer versions of D3.
 
 ### Older Versions
 
