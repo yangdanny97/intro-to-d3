@@ -20,7 +20,7 @@ This tutorial is a fork of Square's [Intro to D3](https://square.github.io/intro
 
 ### Older Versions
 
-**This tutorial is meant for D3 v5.** Major versions of D3 frequently come with breaking changes, so the code from this tutorial may not run if you are using older versions of D3. 
+**This tutorial is meant for D3 v5-v7.** Major versions of D3 frequently come with breaking changes, so the code from this tutorial may not run if you are using older versions of D3. 
 
 If you want to view a version of the tutorial compatible with older versions of D3, check out the archived source code here:
 - [v3 version][archive-v3]

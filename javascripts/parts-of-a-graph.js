@@ -1,13 +1,13 @@
-(function() {
+(() => {
   /* First graph example, simple line chart */
   var data = [];
 
-  d3.selectAll('.ex-1 .example-source tbody tr').each(function() {
+  d3.selectAll('.ex-1 .example-source tbody tr').each(() => {
     var row = d3.select(this),
         date = null,
         amount = null;
 
-    row.selectAll('td').each(function(d, i) {
+    row.selectAll('td').each((d, i) => {
       var td = d3.select(this);
       if (i == 0) {
         date = new Date(Date.parse(td.text()));
@@ -66,8 +66,8 @@
     .call(yAxis);
 
   var line = d3.line()
-      .x(function(d) { return x(getDate(d)) })
-      .y(function(d) { return y(getAmount(d)) })
+      .x(d => x(getDate(d)))
+      .y(d => y(getAmount(d)))
 
   svg.append("path")
     .datum(data)

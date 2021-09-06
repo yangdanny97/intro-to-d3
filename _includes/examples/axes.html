@@ -13,7 +13,7 @@
 
       var x = d3.scaleTime()
           .range([50, 250])
-          .domain(d3.extent(data, function(d) { return new Date(d.date); }));
+          .domain(d3.extent(data, d => new Date(d.date)));
 
       {% include examples/axes.js %}
     </script>
