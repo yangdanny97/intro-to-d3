@@ -1,9 +1,11 @@
 # Intro to D3
 
-This is the source for Square's [Intro to D3.js][intro-to-d3] tutorial, it's
-a brief intro to d3.js with examples.
+A brief intro to D3.js, with examples - view it online [here](intro-to-d3)
+This is a fork of Square's [Intro to D3.js][original-intro-to-d3] tutorial, updated for newer versions of D3 (the original tutorial is for D3 v3 and v4)
 
-[intro-to-d3]: https://square.github.io/intro-to-d3
+
+[intro-to-d3]: https://yangdanny97.github.io./intro-to-d3
+[original-intro-to-d3]: https://square.github.io/intro-to-d3
 
 ## Developing Locally
 
