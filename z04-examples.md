@@ -36,9 +36,9 @@ First we get our source data:
   <div class="example example-source">
     {% highlight javascript %}
 var sales = [
-  { product: 'Hoodie',  count: 12 },
-  { product: 'Jacket',  count: 7 },
-  { product: 'Snuggie', count: 6 },
+    { product: 'Hoodie',  count: 12 },
+    { product: 'Jacket',  count: 7 },
+    { product: 'Snuggie', count: 6 },
 ];
     {% endhighlight %}
   </div>
@@ -57,24 +57,24 @@ var pie = d3.pie()
 var slices = pie(sales);
 // the result looks roughly like this:
 [
-  {
-    data: sales[0],
-    endAngle: 3.0159289474462017,
-    startAngle: 0,
-    value: 12
-  },
-  {
-    data: sales[1],
-    startAngle: 3.0159289474462017,
-    endAngle: 4.775220833456486,
-    value: 7
-  },
-  {
-    data: sales[2],
-    startAngle: 4.775220833456486,
-    endAngle: 6.283185307179587,
-    value: 6
-  }
+    {
+        data: sales[0],
+        endAngle: 3.0159289474462017,
+        startAngle: 0,
+        value: 12
+    },
+    {
+        data: sales[1],
+        startAngle: 3.0159289474462017,
+        endAngle: 4.775220833456486,
+        value: 7
+    },
+    {
+        data: sales[2],
+        startAngle: 4.775220833456486,
+        endAngle: 6.283185307179587,
+        value: 6
+    }
 ]
     {% endhighlight %}
   </div>
@@ -89,36 +89,36 @@ to actually drawing, such as the radius size.
   <div class="example example-source">
     {% highlight javascript %}
 var arc = d3.arc()
-  .innerRadius(0)
-  .outerRadius(50);
+    .innerRadius(0)
+    .outerRadius(50);
 
 // helper that returns a color based on an ID
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var svg = d3.select('svg.pie');
 var g = svg.append('g')
-  .attr('transform', 'translate(200, 50)')
+    .attr('transform', 'translate(200, 50)')
 
 g.selectAll('path.slice')
-  .data(slices)
-    .enter()
-      .append('path')
+    .data(slices)
+    .join(enter => enter
+        .append('path')
         .attr('class', 'slice')
         .attr('d', arc)
-        .attr('fill', d => color(d.data.product));
+        .attr('fill', d => color(d.data.product)));
 
 // building a legend is as simple as binding
 // more elements to the same data. in this case,
 // <text> tags
 svg.append('g')
-  .attr('class', 'legend')
-    .selectAll('text')
-    .data(slices)
-      .enter()
-        .append('text')
-          .text(d => '• ' + d.data.product)
-          .attr('fill', d => color(d.data.product))
-          .attr('y', (d, i) => 20 * (i + 1))
+    .attr('class', 'legend')
+        .selectAll('text')
+        .data(slices)
+        .join(enter => enter
+            .append('text')
+            .text(d => '• ' + d.data.product)
+            .attr('fill', d => color(d.data.product))
+            .attr('y', (d, i) => 20 * (i + 1)));
     {% endhighlight %}
   </div>
 
@@ -197,9 +197,9 @@ Transformed into a dense array, our data looks like this:
   <div class="example example-source">
     {% highlight javascript %}
 var sales = [
-  { date: "2014-01-01", hoodies: 6, jackets: 2, snuggies: 3 },
-  { date: "2014-01-02", hoodies: 7, jackets: 5, snuggies: 2 },
-  { date: "2014-01-03", hoodies: 8, jackets: 7, snuggies: 3 }
+    { date: "2014-01-01", hoodies: 6, jackets: 2, snuggies: 3 },
+    { date: "2014-01-02", hoodies: 7, jackets: 5, snuggies: 2 },
+    { date: "2014-01-03", hoodies: 8, jackets: 7, snuggies: 3 }
 ];
     {% endhighlight %}
   </div>
@@ -222,7 +222,7 @@ a whole other topic.
   <div class="example example-source">
     {% highlight javascript %}
 var stack = d3.stack()
-  .keys(["hoodies", "jackets", "snuggies"])
+    .keys(["hoodies", "jackets", "snuggies"]);
 
 var stacked = stack(sales);
     {% endhighlight %}
@@ -279,39 +279,39 @@ var width = 200;
 var maxY = d3.max(stacked, d => d3.max(d, d => d[1]));
 
 var y = d3.scaleLinear()
-  .range([height, 0])
-  .domain([0, maxY]);
+    .range([height, 0])
+    .domain([0, maxY]);
 
 var x = d3.scaleTime()
-  .range([0, width])
-  .domain(d3.extent(sales, d => new Date(Date.parse(d.date))))
-  .nice(4);
+    .range([0, width])
+    .domain(d3.extent(sales, d => new Date(Date.parse(d.date))))
+    .nice(4);
 
 var svg = d3.select('svg.stack');
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 // bind a <g> tag for each layer
 var layers = svg.selectAll('g.layer')
-  .data(stacked, d => d.key)
-    .enter()
-      .append('g')
-        .attr('class', 'layer')
-        .attr('fill', d => color(d.key))
+    .data(stacked, d => d.key)
+    .join(enter => enter
+        .append('g')
+            .attr('class', 'layer')
+            .attr('fill', d => color(d.key)));
 
 // bind a <rect> to each value inside the layer
 layers.selectAll('rect')
   .data(d => d)
-  .enter()
-    .append('rect')
-      .attr('x', d => x(new Date(Date.parse(d.data.date))))
-      .attr('width', width / 3)
-        // remember that SVG is y-down while our graph is y-up!
-        // here, we set the top-left of this bar segment to the
-        // larger value of the pair
-      .attr('y', d => y(d[1]))
-        // since we are drawing our bar from the top downwards,
-        // the length of the bar is the distance between our points
-      .attr('height', d => y(d[0]) - y(d[1]));
+  .join(enter => enter
+        .append('rect')
+        .attr('x', d => x(new Date(Date.parse(d.data.date))))
+        .attr('width', width / 3)
+            // remember that SVG is y-down while our graph is y-up!
+            // here, we set the top-left of this bar segment to the
+            // larger value of the pair
+        .attr('y', d => y(d[1]))
+            // since we are drawing our bar from the top downwards,
+            // the length of the bar is the distance between our points
+        .attr('height', d => y(d[0]) - y(d[1])));
     {% endhighlight %}
   </div>
 

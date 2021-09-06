@@ -3,16 +3,16 @@
     var days = [],
         maxCount = 0;
 
-    d3.selectAll('.ex-2 .example-source table').each(function() {
+    d3.selectAll('.ex-2 .example-source table').each(function () {
         var table = d3.select(this),
             data = [];
 
-        table.selectAll('tbody tr').each(function() {
+        table.selectAll('tbody tr').each(function () {
             var row = d3.select(this),
                 product = null,
                 count = null;
 
-            row.selectAll('td').each(function(d, i) {
+            row.selectAll('td').each(function (d, i) {
                 var td = d3.select(this);
                 if (i == 0) {
                     product = td.text();
