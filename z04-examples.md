@@ -101,11 +101,14 @@ var g = svg.append('g')
 
 g.selectAll('path.slice')
     .data(slices)
-    .join(enter => enter
-        .append('path')
-        .attr('class', 'slice')
-        .attr('d', arc)
-        .attr('fill', d => color(d.data.product)));
+    .join(
+        enter => {
+            enter.append('path')
+            .attr('class', 'slice')
+            .attr('d', arc)
+            .attr('fill', d => color(d.data.product))
+        }
+    );
 
 // building a legend is as simple as binding
 // more elements to the same data. in this case,
@@ -114,11 +117,14 @@ svg.append('g')
     .attr('class', 'legend')
         .selectAll('text')
         .data(slices)
-        .join(enter => enter
-            .append('text')
-            .text(d => '• ' + d.data.product)
-            .attr('fill', d => color(d.data.product))
-            .attr('y', (d, i) => 20 * (i + 1)));
+        .join(
+            enter => {
+                enter.append('text')
+                .text(d => '• ' + d.data.product)
+                .attr('fill', d => color(d.data.product))
+                .attr('y', (d, i) => 20 * (i + 1));
+            }
+        );
     {% endhighlight %}
   </div>
 
@@ -293,25 +299,31 @@ var color = d3.scaleOrdinal(d3.schemeCategory10);
 // bind a <g> tag for each layer
 var layers = svg.selectAll('g.layer')
     .data(stacked, d => d.key)
-    .join(enter => enter
-        .append('g')
+    .join(
+        enter => {
+            enter.append('g')
             .attr('class', 'layer')
-            .attr('fill', d => color(d.key)));
+            .attr('fill', d => color(d.key));
+        }
+    );
 
 // bind a <rect> to each value inside the layer
 layers.selectAll('rect')
-  .data(d => d)
-  .join(enter => enter
-        .append('rect')
-        .attr('x', d => x(new Date(Date.parse(d.data.date))))
-        .attr('width', width / 3)
-            // remember that SVG is y-down while our graph is y-up!
-            // here, we set the top-left of this bar segment to the
-            // larger value of the pair
-        .attr('y', d => y(d[1]))
-            // since we are drawing our bar from the top downwards,
-            // the length of the bar is the distance between our points
-        .attr('height', d => y(d[0]) - y(d[1])));
+    .data(d => d)
+    .join(
+        enter => {
+            enter.append('rect')
+            .attr('x', d => x(new Date(Date.parse(d.data.date))))
+            .attr('width', width / 3)
+                // remember that SVG is y-down while our graph is y-up!
+                // here, we set the top-left of this bar segment to the
+                // larger value of the pair
+            .attr('y', d => y(d[1]))
+                // since we are drawing our bar from the top downwards,
+                // the length of the bar is the distance between our points
+            .attr('height', d => y(d[0]) - y(d[1]));
+        }
+    );
     {% endhighlight %}
   </div>
 

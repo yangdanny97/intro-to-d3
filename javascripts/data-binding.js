@@ -55,22 +55,20 @@
         })
 
         function update() {
-            var rects = svg.selectAll('rect')
-                .data(sales, (d, i) => d.product);
-
-            // When we enter, we add the DOM element
-            // and set up the things that won't change
-            var enterRects = rects.enter()
-                .append('rect')
-                .attr('x', x(0))
-                .attr('y', (d, i) => y(d.product))
-                .attr('height', y.bandwidth())
-
-            // "rects" represents the update selection, we need to
-            // manually merge it with the enter selection to update
-            // all rects at the same time
-            rects.merge(enterRects)
-                .attr('width', (d, i) => x(d.count));
+            svg.selectAll('rect')
+                .data(sales, (d, i) => d.product)
+                .join(
+                    enter => {
+                        enter.append('rect')
+                        .attr('x', x(0))
+                        .attr('y', (d, i) => y(d.product))
+                        .attr('height', y.bandwidth())
+                        .attr('width', (d, i) => x(d.count));
+                    },
+                    update => {
+                        update.attr('width', (d, i) => x(d.count));
+                    },
+                );
         };
 
         update();
@@ -88,21 +86,21 @@
         })
 
         function update() {
-            var rects = svg.selectAll('rect')
-                .data(sales, (d, i) => d.product);
-
-            // When we enter, we add the DOM element
-            // and set up the things that won't change
-            var enterRects = rects.enter()
-                .append('rect')
-                .attr('x', x(0))
-                .attr('y', (d, i) => y(d.product))
-                .attr('height', y.bandwidth())
-                .attr('width', (d, i) => x(d.count));
-
-            rects.merge(enterRects).transition()
-                .duration(1000)
-                .attr('width', (d, i) => x(d.count));
+            svg.selectAll('rect')
+                .data(sales, (d, i) => d.product)
+                .join(
+                    enter => {
+                        enter.append('rect')
+                        .attr('x', x(0))
+                        .attr('y', (d, i) => y(d.product))
+                        .attr('height', y.bandwidth())
+                        .attr('width', (d, i) => x(d.count));
+                    },
+                    update => {
+                        update.transition().duration(1000)
+                        .attr('width', (d, i) => x(d.count));
+                    },
+                );
         };
 
         update();
