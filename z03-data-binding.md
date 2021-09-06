@@ -11,12 +11,6 @@ permalink: /data-binding/
 - [Identity and the Key Function](#identity-and-the-key-function)
 - [Transitions `selection.transition()`](#transitions-selectiontransition)
 
-<div class="info">
-  Heads up! Data binding is probably the hardest part of D3 to "get".
-  Personally, it took this being re-explained like 2 or 3 times to really
-  internalize what was going on.
-</div>
-
 D3 selections are a different way to look at data binding. They're powerful
 because the same selection can be updated for different data later on. Updating
 is the most powerful part of selections.
@@ -133,27 +127,19 @@ attribute editing helpers to configure each circle per its data point.
     {% highlight javascript %}
 // recall that scales are functions that map from
 // data space to screen space
-var maxCount = d3.max(sales, function(d, i) {
-  return d.count;
-});
+var maxCount = d3.max(sales, (d, i) => d.count);
 var x = d3.scaleLinear()
   .range([0, 300])
   .domain([0, maxCount]);
 var y = d3.scaleOrdinal()
   .rangeRoundBands([0, 75])
-  .domain(sales.map(function(d, i) {
-    return d.product;
-  }));
+  .domain(sales.map((d, i) => d.product));
 
 newRects.append('rect')
   .attr('x', x(0))
-  .attr('y', function(d, i) {
-    return y(d.product);
-  })
+  .attr('y', (d, i) => y(d.product))
   .attr('height', y.rangeBand())
-  .attr('width', function(d, i) {
-    return x(d.count);
-  });
+  .attr('width', (d, i) => x(d.count));
     {% endhighlight %}
   </div>
 
@@ -287,7 +273,7 @@ var sales2 = [
 ];
 
 var rects = svg.selectAll('rect')
-  .data(sales1, function(d, i) { return d.product; } );
+  .data(sales1, (d, i) => d.product);
 
 rects.enter().append('rect');
 
@@ -295,7 +281,7 @@ rects.size();
 // 2 -- first join, adds two new elements
 
 var nextrects = rects
-  .data(sales2, function(d, i) { return d.product; });
+  .data(sales2, (d, i) => d.product);
 
 nextrects.exit().size();
 // 1 -- one element to remove
@@ -390,25 +376,21 @@ function toggle() {
 
 function update() {
   var rects = svg.selectAll('rect')
-    .data(sales, function(d, i) { return d.product });
+    .data(sales, (d, i) => d.product);
 
   // When we enter, we add the DOM element
   // and set up the things that won't change
   var enterRects = rects.enter()
     .append('rect')
       .attr('x', x(0))
-      .attr('y', function(d, i) {
-        return y(d.product);
-      })
+      .attr('y', (d, i) => y(d.product))
       .attr('height', y.bandwidth())
 
   // "rects" represents the update selection, we need to
   // manually merge it with the enter selection to update
   // all rects at the same time
   rects.merge(enterRects)
-    .attr('width', function(d, i) {
-      return x(d.count);
-    });
+    .attr('width', (d, i) => x(d.count));
 };
     {% endhighlight %}
   </div>
@@ -439,25 +421,19 @@ function toggle() {
 
 function update() {
   var rects = svg.selectAll('rect')
-    .data(sales, function(d, i) { return d.product });
+    .data(sales, (d, i) => d.product);
 
   var enterRects = rects.enter()
     .append('rect')
       .attr('x', x(0))
-      .attr('y', function(d, i) {
-        return y(d.product);
-      })
+      .attr('y', (d, i) => y(d.product))
       .attr('height', y.bandwidth())
-      .attr('width', function(d, i) {
-        return x(d.count);
-      });
+      .attr('width', (d, i) => x(d.count));
 
   rects.merge(enterRects)
     .transition() // NEW
     .duration(1000) // Also NEW
-      .attr('width', function(d, i) {
-        return x(d.count);
-      });
+    .attr('width', (d, i) => x(d.count));
 };
 
     {% endhighlight %}
