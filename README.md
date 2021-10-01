@@ -1,6 +1,6 @@
 # Intro to D3
 
-A brief intro to D3.js, with examples - view it online [here](intro-to-d3).
+A brief intro to D3.js, with examples - view it online [here][intro-to-d3].
 
 This is a fork of Square's [Intro to D3.js][original-intro-to-d3] tutorial, updated to reflect changes in v5-v7 of D3 (the original tutorial is for v3 and v4).
 
