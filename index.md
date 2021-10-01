@@ -3,7 +3,7 @@ layout: page
 title: Overview
 ---
 
-### Introduction
+### Introduction to D3.js
 
 This tutorial is a quick intro to [D3.js](http://d3js.org/), a Javascript
 library for creating interactive data visualizations in the browser. D3 is built on top of
